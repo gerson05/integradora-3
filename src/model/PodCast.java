@@ -1,36 +1,71 @@
 package model;
 
-public class PodCast {
-    private String name;
+public class PodCast extends Audio {
     private String description;
-    private String category;
-    private String urlCoverPage;
-    private double duration;
-    private int reproductionNumber;
+    private int category;
     
-    public PodCast(String name, String description, String category, String urlCoverPage, double duration, int reproductionNumber){
-        this.name= name;
-        this.description=description;
+    private Category categoryType;
+    
+    public PodCast(String name, String description, int category, String urlCoverPage, double duration, int reproductionNumber){
+        super(name, urlCoverPage, duration, reproductionNumber);
+        this.description= description;
         this.category= category;
-        this.urlCoverPage= urlCoverPage;
-        this.duration= duration;
-        this.reproductionNumber=reproductionNumber;
+        
+        categoryType = chooseCategoryType(category);
     }
     
+public Category chooseCategoryType(int category){
+    switch(category){
+        case 1:
+        categoryType = Category.ENTERTEINMENT;
+        break;
+
+        case 2:
+        categoryType = Category.FASHION;
+        break;
+
+        case 3:
+        categoryType = Category.POLITICISM;
+        break;
+
+        case 4:
+        categoryType = Category.VIDEOGAMES;
+        break;
+
+    }
+    return categoryType;
+}   
 
     /**
-     * @return String return the name
+     * @return int return the category
      */
-    public String getName() {
-        return name;
+    public int getCategory() {
+        return category;
     }
 
     /**
-     * @param name the name to set
+     * @param category the category to set
      */
-    public void setName(String name) {
-        this.name = name;
+    public void setCategory(int category) {
+        this.category = category;
     }
+
+
+   
+    /**
+     * @return Category return the categoryType
+     */
+    public Category getCategoryType() {
+        return categoryType;
+    }
+
+    /**
+     * @param categoryType the categoryType to set
+     */
+    public void setCategoryType(Category categoryType) {
+        this.categoryType = categoryType;
+    }
+
 
     /**
      * @return String return the description
@@ -44,62 +79,6 @@ public class PodCast {
      */
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    /**
-     * @return String return the category
-     */
-    public String getCategory() {
-        return category;
-    }
-
-    /**
-     * @param category the category to set
-     */
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    /**
-     * @return String return the urlCoverPage
-     */
-    public String getUrlCoverPage() {
-        return urlCoverPage;
-    }
-
-    /**
-     * @param urlCoverPage the urlCoverPage to set
-     */
-    public void setUrlCoverPage(String urlCoverPage) {
-        this.urlCoverPage = urlCoverPage;
-    }
-
-    /**
-     * @return double return the duration
-     */
-    public double getDuration() {
-        return duration;
-    }
-
-    /**
-     * @param duration the duration to set
-     */
-    public void setDuration(double duration) {
-        this.duration = duration;
-    }
-
-    /**
-     * @return int return the reproductionNumber
-     */
-    public int getReproductionNumber() {
-        return reproductionNumber;
-    }
-
-    /**
-     * @param reproductionNumber the reproductionNumber to set
-     */
-    public void setReproductionNumber(int reproductionNumber) {
-        this.reproductionNumber = reproductionNumber;
     }
 
 }

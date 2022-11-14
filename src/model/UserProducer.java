@@ -1,20 +1,22 @@
 package model;
-import java.util.Date;
+import java.util.*;
 
-public class UserProducer extends User{
-Date fecha = new Date(0, 0, 0);    
+public class UserProducer extends User{ 
 private String name;
 private String photo;
 private int numVisualization;
 
  
-public UserProducer(String name, String photo, int numVisualization){
+public UserProducer(String name, String photo,String fecha, String nickname, String cc){
+    super(fecha, nickname, cc);
 this.name=name;
 this.photo=photo;
-this.numVisualization=numVisualization;
-
+this.numVisualization=0;
 }
-
+public String toString(){
+    String message = super.toString() +""+ name+"" +""+ photo+""+ "" +numVisualization;
+    return message;
+}
     public String getName() {
         return name;
     }

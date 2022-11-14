@@ -9,6 +9,11 @@ this.fecha= fecha;
 this.nickname=nickname;
 this.cc=cc;
 }
+
+public String toString(){
+    String message =nickname+""+ cc+""+ fecha;
+    return message;
+}
     /**
      * @return String return the nickname
      */

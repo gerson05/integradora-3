@@ -1,37 +1,44 @@
 package model;
 
-public class Song {
-    private String name;
+public class Song extends Audio {
     private String album;
-    private String gender;
-    private String urlCoverPage;
-    private double duration;
     private double value;
-    private int reproductionNumber;
     private int numUnitsSold;
 
-    public Song(String name, String album, String gender, String urlcoverLage, double duration, double value, int reproductionNumber, int numUnitsSold){
-        this.name= name;
+    private Gender genderType;
+
+    public Song(String name, String album, int gender, String urlcoverLage, double duration, double value, int reproductionNumber, int numUnitsSold){
+        super(name, urlcoverLage, duration, reproductionNumber);
         this.album=album;
-        this.gender= gender;
-        this.urlCoverPage= urlcoverLage;
-        this.duration= duration;
         this.value= value;
-        this.reproductionNumber= reproductionNumber;
         this.numUnitsSold= numUnitsSold;
+        genderType = chooseGenderType(gender);
 
+    }
+
+    public Gender chooseGenderType(int gender){
+        switch(gender){
+            case 1:
+            genderType= Gender.POP;
+            break;
+
+            case 2:
+            genderType= Gender.ROCK;
+            break;
+
+            case 3: 
+            genderType= Gender.TRAP;
+            break;
+
+            case 4: 
+            genderType= Gender.HOUSE;
+            break;
+        }
+        return genderType;
     }
 
     
-    public String getName() {
-        return name;
-    }
-
-    
-    public void setName(String name) {
-        this.name = name;
-    }
-
+   
     
     public String getAlbum() {
         return album;
@@ -41,37 +48,6 @@ public class Song {
     public void setAlbum(String album) {
         this.album = album;
     }
-
-    
-    public String getGender() {
-        return gender;
-    }
-
-    
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    
-    public String getUrlCoverPage() {
-        return urlCoverPage;
-    }
-
-    
-    public void setUrlCoverPage(String urlCoverPage) {
-        this.urlCoverPage = urlCoverPage;
-    }
-
-    
-    public double getDuration() {
-        return duration;
-    }
-
-    
-    public void setDuration(double duration) {
-        this.duration = duration;
-    }
-
     
     public double getValue() {
         return value;
@@ -81,25 +57,16 @@ public class Song {
     public void setValue(double value) {
         this.value = value;
     }
-
-    
-    public int getReproductionNumber() {
-        return reproductionNumber;
-    }
-
-    
-    public void setReproductionNumber(int reproductionNumber) {
-        this.reproductionNumber = reproductionNumber;
-    }
-
     
     public int getNumUnitsSold() {
         return numUnitsSold;
     }
 
-    
     public void setNumUnitsSold(int numUnitsSold) {
         this.numUnitsSold = numUnitsSold;
     }
+
+
+    
 
 }
