@@ -21,8 +21,11 @@ public class UserStandar extends UserConsumer {
                 message = "Playlist created successfully";
                 stop = true;
             }
+        }
+        if(stop == true){
             message = "Already exist a playlist with that id.";
         }
+        
         return message;
     }
 

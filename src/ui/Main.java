@@ -74,9 +74,9 @@ public class Main {
         System.out.println("Enter the type user that you are\nuser consumer:\n1 for standar\n2 for premium");
         int opc2 = sc.nextInt();
         if (opc2 == 1) {
-            controller.addUserStandar(date, nickname, cc);
+            System.out.println(controller.addUserStandar(date, nickname, cc)) ;
         } else if (opc2 == 2) {
-            controller.addUserPremium(date, nickname, cc);
+            System.out.println(controller.addUserPremium(date, nickname, cc)) ;
         }
     }
 
@@ -103,9 +103,9 @@ public class Main {
         System.out.println("Enter the user producer type\n1 for artist\n2 for creator content");
         int typeUser = sc.nextInt();
         if (typeUser == 1) {
-            controller.addUserProducer(typeUser, name, photo, date, nickname, cc);
+            System.out.println(controller.addUserProducer(typeUser, name, photo, date, nickname, cc));
         } else if (typeUser == 2) {
-            controller.addUserProducer(name, photo, typeUser, date, nickname, cc);
+            System.out.println(controller.addUserProducer(name, photo, typeUser, date, nickname, cc));
         }
 
     }
@@ -172,7 +172,7 @@ public class Main {
                     int numRep = sc.nextInt();
                     System.out.println("Categoría:\n1: Politicism\n2: enterteiment\n3: videogame\n4: fashion ");
                     int category = sc.nextInt();
-                    System.out.println(controller.addContent(name, description, category, url, duration, i, opcion1));
+                    System.out.println(controller.addContent(name, description, category, url, duration, numRep, i));
                     System.out.println("Ver datos...");
                     System.out.println(controller.giveInformationAudios());
                 }

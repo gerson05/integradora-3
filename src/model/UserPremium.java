@@ -11,15 +11,15 @@ public class UserPremium extends UserConsumer {
     }
 
     public String addPlayList(String name) {
-        String message = "";
         playlists.add(new Playlist(name));
-        return message;
+        return "The playlist created successfully";
     }
 
-    public String toString(){
+    public String toString() {
         String message = super.toString();
         return message;
     }
+
     /**
      * @return ArrayList <Playlist> return the playlists
      */

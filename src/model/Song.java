@@ -69,4 +69,19 @@ public class Song extends Audio {
 
     
 
+
+    /**
+     * @return Gender return the genderType
+     */
+    public Gender getGenderType() {
+        return genderType;
+    }
+
+    /**
+     * @param genderType the genderType to set
+     */
+    public void setGenderType(Gender genderType) {
+        this.genderType = genderType;
+    }
+
 }

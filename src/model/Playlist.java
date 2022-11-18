@@ -4,17 +4,19 @@ import java.util.ArrayList;
 
 public class Playlist {
     private String name;
-    private int id;
+    private double id;
 
     private ArrayList <Audio> audios;
     public Playlist(String name){
         this.name= name;
-        this.id=0;
+        id= Math.random()*100;
         audios = new ArrayList <Audio>();
     }
 
     /**
      * @return String return the name
+     * 
+     * 
      */
     public String getName() {
         return name;
@@ -30,7 +32,7 @@ public class Playlist {
     /**
      * @return int return the id
      */
-    public int getId() {
+    public double getId() {
         return id;
     }
 
