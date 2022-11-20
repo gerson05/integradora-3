@@ -19,16 +19,12 @@ public class Artist extends UserProducer{
         return message;
     }
     
-    /**
-     * @return int return the typeUser
-     */
+   
     public int getTypeUser() {
         return typeUser;
     }
 
-    /**
-     * @param typeUser the typeUser to set
-     */
+    
     public void setTypeUser(int typeUser) {
         this.typeUser = typeUser;
     }

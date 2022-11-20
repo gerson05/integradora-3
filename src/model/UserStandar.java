@@ -12,6 +12,7 @@ public class UserStandar extends UserConsumer {
         myplaylist = new Playlist[20];
     }
 
+
     public String addPlaylist(String name) {
         String message = "";
         boolean stop = false;
@@ -34,58 +35,42 @@ public class UserStandar extends UserConsumer {
         return message;
     }
 
-    /**
-     * @return int return the purshasedSongs
-     */
+  
     public int getPurshasedSongs() {
         return purshasedSongs;
     }
 
-    /**
-     * @param purshasedSongs the purshasedSongs to set
-     */
+   
     public void setPurshasedSongs(int purshasedSongs) {
         this.purshasedSongs = purshasedSongs;
     }
 
-    /**
-     * @return int return the createAlbum
-     */
+  
     public int getCreateAlbum() {
         return createAlbum;
     }
 
-    /**
-     * @param createAlbum the createAlbum to set
-     */
+   
     public void setCreateAlbum(int createAlbum) {
         this.createAlbum = createAlbum;
     }
 
-    /**
-     * @return Playlist [] return the myplaylist
-     */
+    
     public Playlist[] getMyplaylist() {
         return myplaylist;
     }
 
-    /**
-     * @param myplaylist the myplaylist to set
-     */
+   
     public void setMyplaylist(Playlist[] myplaylist) {
         this.myplaylist = myplaylist;
     }
 
-    /**
-     * @return Ads return the ads
-     */
+   
     public Ads getAds() {
         return ads;
     }
 
-    /**
-     * @param ads the ads to set
-     */
+    
     public void setAds(Ads ads) {
         this.ads = ads;
     }

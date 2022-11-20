@@ -8,9 +8,7 @@ public enum Category {
       FASHION;
   //Getters and setters
  
-  /**
-   * A constant list to enable the access of podcast categories
-  */
+
   public static final String LIST_OF_CATEGORY = "\n"+
           "1. POLITICISM.\n" +
           "2. ENTERTEINMENT\n" +

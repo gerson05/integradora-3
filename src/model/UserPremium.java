@@ -20,16 +20,12 @@ public class UserPremium extends UserConsumer {
         return message;
     }
 
-    /**
-     * @return ArrayList <Playlist> return the playlists
-     */
+   
     public ArrayList<Playlist> getPlaylists() {
         return playlists;
     }
 
-    /**
-     * @param playlists the playlists to set
-     */
+    
     public void setPlaylists(ArrayList<Playlist> playlists) {
         this.playlists = playlists;
     }

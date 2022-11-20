@@ -13,32 +13,22 @@ public class Playlist {
         audios = new ArrayList <Audio>();
     }
 
-    /**
-     * @return String return the name
-     * 
-     * 
-     */
+  
     public String getName() {
         return name;
     }
 
-    /**
-     * @param name the name to set
-     */
+   
     public void setName(String name) {
         this.name = name;
     }
 
-    /**
-     * @return int return the id
-     */
+    
     public double getId() {
         return id;
     }
 
-    /**
-     * @param id the id to set
-     */
+   
     public void setId(int id) {
         this.id = id;
     }
@@ -46,16 +36,12 @@ public class Playlist {
 
  
 
-    /**
-     * @return ArrayList <Audio> return the audios
-     */
+   
     public ArrayList <Audio> getAudios() {
         return audios;
     }
 
-    /**
-     * @param audios the audios to set
-     */
+    
     public void setAudios(ArrayList <Audio> audios) {
         this.audios = audios;
     }

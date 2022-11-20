@@ -196,6 +196,7 @@ public class Main {
     }
 
     public void editPlaylist() {
+        String name ="";
         System.out.println("Id de la playlist: ");
         int id = sc.nextInt();
         System.out.println("Qué quieres editar en la playlist?:" + "\n" +
@@ -207,16 +208,16 @@ public class Main {
         switch (opcion) {
             case 1:
                 System.out.println("Nombre nuevo para la playlist: ");
-                String name = sc.nextLine();
-                System.out.println(controller.editPlaylist(name, opcion, id));
+                String name2 = sc.nextLine();
+                System.out.println(controller.editPlaylist(opcion, id, opcion, name));
                 break;
             case 2:
                 String obj = controller.searchObj(id).getName();
-                System.out.println(controller.editPlaylist(obj, opcion, id));
+                System.out.println(controller.editPlaylist(opcion, id, opcion, name));
                 break;
             case 3:
                 String obj2 = controller.searchObj(id).getName();
-                System.out.println(controller.editPlaylist(obj2, opcion, id));
+                System.out.println(controller.editPlaylist(opcion, id, opcion, name));
             default:
                 break;
         }
