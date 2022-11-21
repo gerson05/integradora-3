@@ -13,7 +13,7 @@ public class UserConsumer extends User {
         this.producerFav= null;
     }
 
-    public String toString(){
+    public String toString() {
         String message = super.toString() +""+ timeReached +""+ contentFav+ "" + "" + producerFav;
         return message;
     }
@@ -21,7 +21,6 @@ public class UserConsumer extends User {
     public double getTimeReached() {
         return timeReached;
     }
-
    
     public void setTimeReached(double timeReached) {
         this.timeReached = timeReached;

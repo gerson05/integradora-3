@@ -17,41 +17,83 @@ public class Main {
 
         while (opc != 6) {
             System.out.println("Menu");
-            System.out.println("1. Agregar usuario consumidor");
-            System.out.println("2. Agregar usuario productor");
-            System.out.println("3. Registrar canciones y podcast");
-            System.out.println("4. Crear una lista de reproducción");
-            System.out.println("5. Editar una lista de reproducción");
-            System.out.println("6. Cerrar menu");
-            System.out.print("Opcion: ");
+            System.out.println("1. add user consumer");
+            System.out.println("2. add user producer");
+            System.out.println("3. register podcast and song");
+            System.out.println("4. create playlist");
+            System.out.println("5. edit playlist");
+            System.out.println("6. share code");
+            System.out.println("7. reproduce playlist");
+            System.out.println("8. shop song ");
+            System.out.println("9. total reproductions");
+            System.out.println("10. most listened genre");
+            System.out.println("11. most listened category");
+            System.out.print("12. top plataform");
+            System.out.println("13.top content plataform");
+            System.out.println("14. most listened song");
+            System.out.println("15. close");
             opc = sc.nextInt();
             sc.nextLine();
 
             switch (opc) {
                 case 1:
-                tool.registerUser();
+                    tool.registerUser();
                     break;
                 case 2:
-                tool.registerUserProducer();
+                    tool.registerUserProducer();
                     break;
                 case 3:
-                tool.addAudio();
+                    tool.addAudio();
                     break;
 
                 case 4:
-                tool.createPlaylist();
+                    tool.createPlaylist();
                     break;
 
                 case 5:
-                tool.editPlaylist();
+                    tool.editPlaylist();
                     break;
 
                 case 6:
+                    tool.shareCode();
+                    break;
+                case 7:
+                    tool.reproducePlaylist();
+                    break;
 
+                case 8:
+                    tool.shopSong();
+                    break;
+
+                case 9:
+                    tool.totalReproductions();
+
+                case 10:
+                    tool.moreListenedGenre();
+                    break;
+
+                case 11:
+                    tool.moreListenedCategory();
+                    break;
+
+                case 12:
+                    tool.topPlataform();
+                    break;
+
+                case 13:
+                    tool.topContentPlataform();
+                    break;
+
+                case 14:
+                    tool.mostSoldSong();
+                    break;
+
+                case 15:
+                    System.out.println("bye bye");
                     break;
 
                 default:
-
+                    System.out.println("que es eso mi so?");
                     break;
             }
         }
@@ -69,14 +111,14 @@ public class Main {
         do {
             System.out.println("Número de cédula: ");
             cc = sc.nextLine();
-        } while (controller.search(cc) == true);
+        } while (controller.searchUser(cc, false) != null);
 
         System.out.println("Enter the type user that you are\nuser consumer:\n1 for standar\n2 for premium");
         int opc2 = sc.nextInt();
         if (opc2 == 1) {
-            System.out.println(controller.addUserStandar(date, nickname, cc)) ;
+            System.out.println(controller.addUserStandar(date, nickname, cc));
         } else if (opc2 == 2) {
-            System.out.println(controller.addUserPremium(date, nickname, cc)) ;
+            System.out.println(controller.addUserPremium(date, nickname, cc));
         }
     }
 
@@ -92,7 +134,7 @@ public class Main {
         do {
             System.out.println("Número de cédula: ");
             cc = sc.nextLine();
-        } while (controller.search(cc) == true);
+        } while (controller.searchUser(cc, false) != null);
 
         System.out.println("Enter the name");
         String name = sc.nextLine();
@@ -126,26 +168,31 @@ public class Main {
                 System.out.println(show);
                 if (!show.equalsIgnoreCase("")) {
                     int i = sc.nextInt();
-                    sc.nextLine();
                     System.out.println("Enter the name of the song ");
                     String name = sc.nextLine();
+                    sc.nextLine();
                     System.out.println("Url of the representative image for album ");
                     String url = sc.nextLine();
                     System.out.println("album name ");
                     String album = sc.nextLine();
-                    sc.nextLine();
                     System.out.println("duration of this song ");
                     double duration = sc.nextDouble();
+                    sc.nextLine();
                     System.out.println("reproduction number ");
                     int numRep = sc.nextInt();
+                    sc.nextLine();
                     System.out.println("units sold number ");
                     int numSold = sc.nextInt();
-                    System.out.println("Gender: 1 rock\n2: pop\n3: trap\n4: house ");
+                    sc.nextLine();
+                    System.out.println("Gender\n: 1 rock\n2: pop\n3: trap\n4: house ");
                     int genre = sc.nextInt();
+                    sc.nextLine();
                     System.out.println("price for the article ");
                     double price = sc.nextDouble();
+                    sc.nextLine();
                     System.out
-                            .println(controller.addContent(name, url, duration, numRep, album, price, numSold, genre, i));
+                            .println(controller.addContent(name, url, duration, numRep, album, price, numSold, genre,
+                                    i));
                     System.out.println("Ver datos...");
                     System.out.println(controller.giveInformationAudios());
                 }
@@ -196,32 +243,94 @@ public class Main {
     }
 
     public void editPlaylist() {
-        String name ="";
-        System.out.println("Id de la playlist: ");
-        int id = sc.nextInt();
-        System.out.println("Qué quieres editar en la playlist?:" + "\n" +
-                "1. Editar nombre. " + "\n" +
-                "2. Agregar audios." + "\n" +
-                "3. Quitar audios" + "\n" +
-                "Opción: ");
-        int opcion = sc.nextInt();
-        switch (opcion) {
+        System.out.println("Enter the nickname ");
+        String nickname = sc.nextLine();
+
+        controller.showPlaylist(nickname);
+        System.out.println("select the playlist to edit");
+        int optionPlaylist = sc.nextInt();
+
+        System.out.println("What action do you want execute?" + "\n" +
+                "1. add audios." + "\n" +
+                "2. delete audios" + "\n" +
+                "option: ");
+        int option = sc.nextInt();
+        switch (option) {
+
             case 1:
-                System.out.println("Nombre nuevo para la playlist: ");
-                String name2 = sc.nextLine();
-                System.out.println(controller.editPlaylist(opcion, id, opcion, name));
-                break;
+                if (option == 1) {
+                    controller.showAudios();
+                    System.out.println("select an audio");
+                    int optionAudio = sc.nextInt();
+                    System.out.println(controller.editPlaylist(option, optionPlaylist,optionAudio , nickname));
+                }
             case 2:
-                String obj = controller.searchObj(id).getName();
-                System.out.println(controller.editPlaylist(opcion, id, opcion, name));
-                break;
-            case 3:
-                String obj2 = controller.searchObj(id).getName();
-                System.out.println(controller.editPlaylist(opcion, id, opcion, name));
+                if(option==2){
+                    controller.showAudios();
+                    System.out.println("select an audio");
+                    int optionAudio = sc.nextInt();
+                    System.out.println(controller.editPlaylist(option, optionPlaylist,optionAudio , nickname));
+                }
             default:
                 break;
         }
 
     }
 
+    public void shareCode() {
+        String[][] matriz = new String[6][6];
+        System.out.println("type 1 if you can share the code of song\n2 for share podcast\n3 for share both");
+        int opc = sc.nextInt();
+        if(opc==1){
+            controller.fillMatrix(matriz);
+            controller.ShowMatrix(matriz);
+            controller.codeMatrixN(matriz);
+            
+        }
+
+        if(opc ==2){
+            controller.fillMatrix(matriz);
+            controller.ShowMatrix(matriz);
+            controller.codeMatrixT(matriz);
+        }
+
+        if(opc ==3){
+            controller.fillMatrix(matriz);
+            controller.ShowMatrix(matriz);
+            controller.codeMatrixR(matriz);
+        }
+        
+    }
+
+    public void reproducePlaylist() {
+        System.out.println();
+    }
+
+    public void shopSong() {
+
+    }
+
+    public void totalReproductions() {
+        controller.totalNumReproductions();
+    }
+
+    public void moreListenedGenre() {
+        controller.genreMorseListened();
+    }
+
+    public void moreListenedCategory() {
+        controller.categoryMorseListened();
+    }
+
+    public void topPlataform() {
+        controller.top5ArtistAndCreators();
+    }
+
+    public void topContentPlataform() {
+        controller.top10SongsAndPodcasts();
+    }
+
+    public void mostSoldSong() {
+        controller.mostSoldSong();
+    }
 }

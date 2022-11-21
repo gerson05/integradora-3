@@ -1,6 +1,9 @@
 package model;
 
 public class UserStandar extends UserConsumer {
+
+    private static int MAX_PLAYLIST_LENGHT = 20;
+
     private int purshasedSongs;
     private int createAlbum;
 
@@ -9,25 +12,36 @@ public class UserStandar extends UserConsumer {
 
     public UserStandar(String fecha, String nickname, String cc) {
         super(fecha, nickname, cc);
-        myplaylist = new Playlist[20];
+        myplaylist = new Playlist[MAX_PLAYLIST_LENGHT];
     }
 
 
     public String addPlaylist(String name) {
-        String message = "";
-        boolean stop = false;
-        for (int i = 0; i < myplaylist.length && !stop; i++) {
-            if (myplaylist[i] == null) {
-                myplaylist[i] = new Playlist(name);
-                message = "Playlist created successfully";
-                stop = true;
+        String message = "Already exist a playlist with that id";
+        boolean added = false;
+        if (!searchPlaylist(name)) {
+            for (int i = 0; i < myplaylist.length && !added; i++) {
+                if (myplaylist[i] == null) {
+                    myplaylist[i] = new Playlist(name);
+                    message = "Playlist created successfully";
+                    added = true;
+                }
             }
         }
-        if(stop == true){
-            message = "Already exist a playlist with that id.";
+        if (!added) {
+            message = "User already has reached the maximum number of playlist created";
         }
-        
-        return message;
+        return message;        
+    }
+
+    private boolean searchPlaylist(String name) {
+        boolean found = false;
+        for (int i = 0; i < myplaylist.length && !found; i++) {
+            if (myplaylist[i] != null && myplaylist[i].getName().equals(name)) {
+                found = true;
+            }
+        }
+        return found;
     }
 
     public String toString() {

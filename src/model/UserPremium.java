@@ -12,7 +12,7 @@ public class UserPremium extends UserConsumer {
 
     public String addPlayList(String name) {
         playlists.add(new Playlist(name));
-        return "The playlist created successfully";
+        return "The playlist has been created successfully";
     }
 
     public String toString() {

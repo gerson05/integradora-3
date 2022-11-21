@@ -9,7 +9,7 @@ public class Controller {
     private ArrayList<Audio> audios;
     private ArrayList<Playlist> playlists;
     private ArrayList<UserProducer> creators;
-    int[][] matriz = new int[6][6];
+    
 
     public Controller() {
         users = new ArrayList<User>();
@@ -211,51 +211,18 @@ public class Controller {
      * @return (String) message of confirmation
      */
     public String addPlaylist(String name, String cc, int userType) {
-        String message = "user not found";
-        if (search(cc) & userType == 1) {
-            for (int i = 0; i < users.size(); i++) {
-                if (users.get(i) instanceof UserStandar) {
-                    UserStandar obj = (UserStandar) users.get(i);
-                    if (obj.getCc().equals(cc)) {
-                        if (searchIdPlaylist(i) == false) {
-                            message = obj.addPlaylist(name);
-                            playlists.add(new Playlist(name));
-                        }
-                    }
-                }
-            }
-        } else if (search(cc) & userType == 2) {
-            for (int i = 0; i < users.size(); i++) {
-                if (users.get(i) instanceof UserPremium) {
-                    UserPremium obj = (UserPremium) users.get(i);
-                    if (obj.getCc().equals(cc)) {
-                        if (searchIdPlaylist(i) == false) {
-                            message = obj.addPlayList(name);
-                            playlists.add(new Playlist(name));
-                        }
-                    }
-                }
-            }
+        String message = "User not found";
+        User user = searchUser(cc, false);
+        if (user != null & userType == 1) {
+            UserStandar userStandar = (UserStandar) user;
+            message = userStandar.addPlaylist(name);
+            playlists.add(new Playlist(name));
+        } else if (user != null && userType == 2) {
+            UserPremium userPremium = (UserPremium) user;
+            message = userPremium.addPlayList(name);
+            playlists.add(new Playlist(name));
         }
         return message;
-    }
-
-    /**
-     * Description: this method serach a user
-     * 
-     * @param cc (String) the identification number of the user
-     * @return (object) the user
-     */
-    public User searchU(String cc) {
-        User objUser = null;
-        boolean confirm = false;
-        for (int i = 0; i < users.size() && !confirm; i++) {
-            if (users.get(i).getCc().equalsIgnoreCase(cc)) {
-                objUser = users.get(i);
-                confirm = true;
-            }
-        }
-        return objUser;
     }
 
     /**
@@ -281,15 +248,24 @@ public class Controller {
      * @param cc (String) the id of the user
      * @return (boolean) the response
      */
-    public boolean search(String cc) {
-        boolean confirm = false;
-        for (int i = 0; i < users.size() && !confirm; i++) {
-            if (users.get(i).getCc().equals(cc)) {
-                confirm = true;
+    public User searchUser(String id, boolean nickName) {
+        boolean found = false;
+        User user = null;
+        for (int i = 0; i < users.size() && !found; i++) {
+            User myUser = (users.get(i));
+            if (nickName) {
+                if (myUser.getNickname().equals(id)) {
+                    found = true;
+                    user = myUser;
+                }
+            } else {
+                if (myUser.getCc().equals(id)) {
+                    found = true;
+                    user = myUser;
+                }
             }
-
         }
-        return confirm;
+        return user;
     }
 
     /**
@@ -332,6 +308,18 @@ public class Controller {
         return obj;
     }
 
+    public User SearchNickname(String nickname) {
+        User obj = null;
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).getNickname().equals(nickname)) {
+                obj = users.get(i);
+            } else {
+                System.out.println("did not exist an user");
+            }
+        }
+        return obj;
+    }
+
     /**
      * Description: this method give the total information of audios
      * 
@@ -355,45 +343,94 @@ public class Controller {
      * @return (String) message of confirmation
      */
     public String editPlaylist(int option, int optionPlaylist, int optionSong, String nameUser) {
-        User objUser = null;
         String message = "";
-        Audio objAudio = audios.get(optionSong);
-        optionPlaylist--;
-
+        Audio objAudio = audios.get(optionSong - 1);
+        User objUser = searchUser(nameUser, true);
         if (objUser instanceof UserStandar && objUser != null && option == 1) {
-
             UserStandar userStandard = (UserStandar) objUser;
-
+            userStandard.getMyplaylist()[optionPlaylist - 1].getAudios().add(objAudio);
             message = "La canción ha sido añadida para el usuario standard";
-        } else if (objUser instanceof UserPremium && objUser != null && option == 1) {
+        }
+        
+        if (objUser instanceof UserPremium && objUser != null && option == 1) {
             UserPremium userPremium = (UserPremium) objUser;
-            userPremium.getPlaylists().get(optionPlaylist);
+            userPremium.getPlaylists().get(optionPlaylist -1).getAudios().add(objAudio);
             message = "La canción ha sido añadida para el usuario premium";
         }
 
-        else if (objUser instanceof UserStandar && objUser != null && option == 2) {
+        if (objUser instanceof UserStandar && objUser != null && option == 2) {
             UserStandar userStandard = (UserStandar) objUser;
-            /* userStandard.getMyplaylist()[optionPlaylist]; */
+            userStandard.getMyplaylist()[optionPlaylist - 1].getAudios().remove(objAudio);
             message = "La canción ha sido eliminada para el usuario standard";
-        } else if (objUser instanceof UserPremium && objUser != null && option == 2) {
+        } 
+        
+        if (objUser instanceof UserPremium && objUser != null && option == 2) {
             UserPremium userPremium = (UserPremium) objUser;
-            userPremium.getPlaylists().remove(objAudio);
+            userPremium.getPlaylists().get(optionPlaylist - 1).getAudios().remove(objAudio);
             message = "La canción" + "ha sido eliminada para el usuario Premium";
         }
-
         return message;
     }
 
-    /**
-     * Description: this method add a song
-     * 
-     * @param obj (Audio) audio object
-     * @return (boolean) if this create
-     */
-    public boolean addSong(Audio obj) {
-        audios.add(obj);
+    public void showAudios() {
+        int count = 1;
+        for (int i = 0; i < audios.size(); i++) {
+            Audio audio = audios.get(i);
+            System.out.println("" + count + "" + audio.getName() + " " + audio.getDuration());
+            count++;
+        }
+    }
 
-        return true;
+    /*
+     * public void showAudiosOfPlaylist(int optionPlaylist, String nickname){
+     * optionPlaylist--;
+     * int cont =1;
+     * Playlist playlist1 =null;
+     * UserStandar objUser1 = null;
+     * UserPremium objUser2= null;
+     * User obj =SearchNickname(nickname);
+     * if(obj instanceof UserStandar){
+     * objUser1 =(UserStandar) obj;
+     * playlist1 = objUser1.getMyplaylist()[optionPlaylist];
+     * for(int i =0; i< playlist1)
+     * }else if(obj instanceof UserPremium){
+     * objUser2 = (UserPremium) obj;
+     * for(int j=0;j<objUser2.getPlaylists().get(optionPlaylist).get;j++){
+     * 
+     * }
+     * }
+     * 
+     * }
+     */
+
+    public void showPlaylist(String nickname) {
+        UserStandar obj1 = null;
+        UserPremium obj2 = null;
+        User user = searchUser(nickname, true);
+        if (user instanceof UserStandar) {
+            obj1 = (UserStandar) user;
+            int count = 1;
+            for (int i = 0; i < obj1.getMyplaylist().length; i++) {
+                Playlist playlist = obj1.getMyplaylist()[i];
+                if (playlist != null) {
+                    System.out.println(count + " - " + obj1.getMyplaylist()[i].getName());
+                } else {
+                    System.out.println(count + " - Available slot");
+                }
+                count++;
+            }
+        }        
+        if (user instanceof UserPremium) {
+            obj2 = (UserPremium) user;
+            int count = 1;
+            for (int i = 0; i < obj2.getPlaylists().size(); i++) {
+                System.out.println(count + " - " + obj2.getPlaylists().get(i).getName());
+                count++;
+            }
+        }
+        if (user == null) {
+            System.out.println("user not found");
+        }        
     }
 
     /**
@@ -401,10 +438,10 @@ public class Controller {
      * 
      * @param matriz (int matrix) the matrix to share code
      */
-    public void fillMatrix() {
+    public void fillMatrix(String[][] matriz) {
         for (int x = 0; x < matriz.length; x++) {
             for (int y = 0; y < matriz[x].length; y++) {
-                matriz[x][y] = (int) (Math.random() * 35 + 1);
+                matriz[x][y] = "" + (int) (Math.random() * 35 + 1);
             }
         }
     }
@@ -414,17 +451,99 @@ public class Controller {
      * 
      * @param matriz (int matriz) the matriz
      */
-    public  void ShowMatrix() {
+    public void ShowMatrix(String [][] matriz) {
         for (int i = 0; i < matriz.length; i++) {
             for (int j = 0; j < matriz[i].length; j++) {
-                if (matriz[i][j] < 10) {
-                    System.out.print(" " + matriz[i][j] + " ");
-                } else {
-                    System.out.print(matriz[i][j] + " ");
-                }
+                System.out.print(matriz[i][j] + " ");
 
             }
         }
+    }
+
+    public String codeMatrixN(String[][] matriz) {
+        String subcode1 = "";
+        String subcode2 = "";
+        String subcode3 = "";
+
+        for (int i = 0; i < matriz.length; i++) {
+            subcode1 += matriz[matriz.length - (i + 1)][0];
+            if (i > 0 && i < matriz.length - 1) {
+                subcode2 += matriz[i][i];
+            }
+            subcode3 += matriz[matriz.length - (i + 1)][5];
+        }
+
+        String code = subcode1 + subcode2 + subcode3;
+
+        return code;
+    }
+
+    public String codeMatrixT(String[][] matriz) {
+        String subcode1 = "";
+        String subcode2 = "";
+        String subcode3 = "";
+        String subcode4 = "";
+        // | 0,0 | 0,1 | 0,2 | 1,2 | 2,2 | 3,2 | 4,2 | 5,2 | 5,3 | 4,3 | 3,3 | 2,3 | 1,3
+        // | 0,3 | 0,4 | 0,5 |
+        for (int i = 0; i < matriz.length; i++) {
+            if (i < 2) {
+                subcode1 += matriz[0][i];
+            }
+            subcode2 += matriz[i][2];
+            subcode3 += matriz[matriz.length - (i + 1)][3];
+            if (i > 3) {
+                subcode4 += matriz[0][i];
+            }
+        }
+
+        String code = subcode1 + subcode2 + subcode3 + subcode4;
+        return code;
+    }
+
+    public String codeMatrixR(String[][] matriz) {
+        // | 5,4 | 5,2 | 5,0 | 4,5 | 4,3 | 4,1 | 3,4 | 3,2 | 3,0 | 2,5 | 2,3 | 2,1 | 1,4
+        // | 1,2 | 0,5 | 0,3 |
+        String subcode1 = "";
+        String subcode2 = "";
+        String subcode3 = "";
+        String subcode4 = "";
+        String subcode5 = "";
+        String subcode6 = "";
+
+        for (int i = matriz.length - 1; i > -1; i--) {
+            if (i % 2 == 0) {
+                subcode1 += matriz[5][i];
+                subcode3 += matriz[3][i];
+            }
+
+            if (i % 2 == 1) {
+                subcode2 += matriz[4][i];
+                subcode4 += matriz[2][i];
+            }
+
+            if (i > 1) {
+                if (i % 2 == 0) {
+                    subcode5 += matriz[1][i];
+                } else {
+                    subcode6 += matriz[0][i];
+                }
+            }
+        }
+
+        String code = subcode1 + subcode2 + subcode3 + subcode4 + subcode5 + subcode6;
+        return code;
+    }
+
+    public String buySong(int option) {
+        Song obj = null;
+        System.out.println("select the song for purchase");
+        showAudios();
+        if (audios.get(-option) instanceof Song) {
+            obj = (Song) audios.get(-option);
+            obj.setNumUnitsSold(+1);
+        }
+        return "the song: " + obj.getName() + " was purchase sucssefully";
+
     }
 
     /**
@@ -631,7 +750,6 @@ public class Controller {
         String message = "";
         if (opc == 1) {
             System.out.print("you choose share song");
-            
 
         } else if (opc == 2) {
             System.out.print("you choose share podcast");
@@ -795,44 +913,26 @@ public class Controller {
         return msj;
     }
 
-    /**
-     * @return ArrayList<User> return the users
-     */
     public ArrayList<User> getUsers() {
         return users;
     }
 
-    /**
-     * @param users the users to set
-     */
     public void setUsers(ArrayList<User> users) {
         this.users = users;
     }
 
-    /**
-     * @return ArrayList<Audio> return the audios
-     */
     public ArrayList<Audio> getAudios() {
         return audios;
     }
 
-    /**
-     * @param audios the audios to set
-     */
     public void setAudios(ArrayList<Audio> audios) {
         this.audios = audios;
     }
 
-    /**
-     * @return ArrayList <Playlist> return the playlists
-     */
     public ArrayList<Playlist> getPlaylists() {
         return playlists;
     }
 
-    /**
-     * @param playlists the playlists to set
-     */
     public void setPlaylists(ArrayList<Playlist> playlists) {
         this.playlists = playlists;
     }
