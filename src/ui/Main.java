@@ -303,11 +303,19 @@ public class Main {
     }
 
     public void reproducePlaylist() {
+        System.out.println("type the cc");
+        String id= sc.nextLine();
+        System.out.println("type the name of playlist");
+        String name= sc.nextLine();
+        controller.playPlayList(id, name);
         System.out.println();
     }
 
     public void shopSong() {
-
+        controller.showAudios();
+        System.out.println("select an option");
+        int opc = sc.nextInt();
+        controller.buySong(opc);
     }
 
     public void totalReproductions() {
