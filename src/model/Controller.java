@@ -536,13 +536,18 @@ public class Controller {
 
     public String buySong(int option) {
         Song obj = null;
+        PodCast obj2=null;
         System.out.println("select the song for purchase");
         showAudios();
         if (audios.get(-option) instanceof Song) {
             obj = (Song) audios.get(-option);
             obj.setNumUnitsSold(+1);
-        }
-        return "the song: " + obj.getName() + " was purchase sucssefully";
+            return "the song: " + obj.getName() + " was purchase sucssefully";
+        }else{
+            obj2 = (PodCast) audios.get(-option);
+            return "the podcast: " + obj2.getName() + " was purchase sucssefully";
+        } 
+        
 
     }
 
