@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.lang.Math;
 
 public class Playlist {
     private String name;
@@ -13,6 +14,13 @@ public class Playlist {
         audios = new ArrayList <Audio>();
     }
 
+    public int totalDuration() {
+        double total = 0.0;
+        for (int i = 0; i < audios.size(); i++) {
+            total += audios.get(i).getDuration();
+        }
+        return (int) Math.ceil(total);
+    }
   
     public String getName() {
         return name;
@@ -32,10 +40,6 @@ public class Playlist {
     public void setId(int id) {
         this.id = id;
     }
-
-
- 
-
    
     public ArrayList <Audio> getAudios() {
         return audios;

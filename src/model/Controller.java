@@ -1,7 +1,8 @@
 package model;
 
-import java.security.MessageDigest;
 import java.util.*;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Controller {
 
@@ -916,6 +917,19 @@ public class Controller {
             top++;
         }
         return msj;
+    }
+
+    public void playPlayList(String userID, String playListName) {
+        
+        
+        Playlist playList = searchPlaylist(playListName);
+        Timer timer = new Timer();
+        TimerTask reproducir = new TimerTask() {
+            public void run() {
+                System.out.println("Playing playlist: "  + playList.getName());
+            }
+        };
+        timer.schedule(reproducir, 0, playList.totalDuration() * 60000);
     }
 
     public ArrayList<User> getUsers() {
