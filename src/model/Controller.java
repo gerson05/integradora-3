@@ -922,7 +922,7 @@ public class Controller {
     public void playPlayList(String userID, String playListName) {
         
         
-        Playlist playList = searchPlaylist(playListName);
+        Playlist playList = searchPlaylist(userID,playListName);
         Timer timer = new Timer();
         TimerTask reproducir = new TimerTask() {
             public void run() {
@@ -930,6 +930,34 @@ public class Controller {
             }
         };
         timer.schedule(reproducir, 0, playList.totalDuration() * 60000);
+    }
+
+    public Playlist searchPlaylist(String id,String name){
+        Playlist obj=null;
+        UserStandar obj2=null;
+        UserPremium obj3=null;
+        User objUser= null;
+        for(int i=0; i<users.size();i++){
+            if(users.get(i).getCc().equals(id)){
+                objUser= users.get(i);
+                if(objUser instanceof UserStandar){
+                    obj2 = (UserStandar) users.get(i);
+                    for(int j=0;j<obj2.getMyplaylist().length;j++){
+                        if(obj2.getMyplaylist()[j].getName().equals(name)){
+                            obj=obj2.getMyplaylist()[j];
+                        }
+                    }
+                }else if(users.get(i) instanceof UserPremium){
+                    obj3=(UserPremium) users.get(i);
+                    for(int k=0;k<obj3.getPlaylists().size();k++){
+                        if(obj3.getPlaylists().get(k).getName().equals(name)){
+                            obj=obj3.getPlaylists().get(k);
+                        }
+                    }
+                } 
+            }
+        }
+        return obj;
     }
 
     public ArrayList<User> getUsers() {
